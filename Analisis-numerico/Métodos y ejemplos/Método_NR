@@ -1,0 +1,37 @@
+import math
+
+def f(theta):  # FUNCIÓN INICIAL DEL PROBLEMA
+    return 10 * math.sin(math.radians(theta)) - 10
+
+def df(theta):  # DERIVADA DE LA FUNCION INICIAL
+    return 10 * math.radians(math.cos(math.radians(theta)))
+
+def newton_raphson(theta_inicial, objetivo, max_iter, tolerancia):
+    theta_actual = theta_inicial
+
+    for n in range(max_iter):
+        f_actual = f(theta_actual)
+        derivada_actual = df(theta_actual)
+
+        if abs(f_actual - objetivo) < tolerancia:
+            return theta_actual  # La solución ha convergido
+
+        theta_actual = theta_actual - (f_actual - objetivo) / derivada_actual
+
+    return None  # No se encontró una solución dentro del rango máximo de iteraciones
+
+# PARAMETROS INICIALES
+theta_inicial = 95.0  # Estimación inicial
+objetivo = 12  # Distancia objetivo
+max_iter = 1000  # Número máximo de iteraciones
+tolerancia = 1e-6  # Tolerancia para la precisión
+
+# LLAMADA AL MÉTODO DE NR
+solucion_newton = newton_raphson(theta_inicial, objetivo, max_iter, tolerancia)
+
+# PRINT DEL RESULTADO
+print('\nMétodo de Newton-Raphson:')
+if solucion_newton is not None:
+    print(f'Ángulo requerido: {solucion_newton:.6f} grados')
+else:
+    print('No se encontró una solución en el número máximo de iteraciones.')

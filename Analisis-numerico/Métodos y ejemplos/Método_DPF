@@ -1,0 +1,35 @@
+import math
+
+def f(theta): ## FUNCIÓN INICIAL DEL PROBLEMA ##
+    return 10*math.sin(math.radians(theta))-10
+
+def punto_fijo(g, x0, max_iter, tolerancia):
+    x_actual = x0
+    
+    for n in range(max_iter):
+        x_siguiente = g(x_actual)
+        if abs(x_siguiente - x_actual) < tolerancia:
+            return x_siguiente #La solución ha convergido
+        
+        x_actual = x_siguiente
+    
+    return None # No se encontró una solución dentro del rango máximo de iteraciones
+
+### DEFINICION DE LA FUNCION DE ITERACION g(theta) ###
+def g(theta):
+    return theta - f(theta) / (10*math.cos(math.radians(theta)))
+ 
+### PARAMETROS INICIALES ###
+x0 = 90.0 #Estimacion inicial
+max_iter = 100 #Número máximo de iteraciones
+tolerancia = 1e-6 #Tolerancia para la precisión
+
+### LLAMADA AL MÉTODO DPF ###
+solucion_punto_fijo = punto_fijo(g, x0, max_iter, tolerancia)
+
+### PRINT DEL RESULTADO ###
+print('\nMétodo de Punto Fijo:')
+if solucion_punto_fijo is not None:
+    print(f'Ángulo requerido: {solucion_punto_fijo:.6f} grados')
+else:
+    print('No se encontró una solución en el número máximo de iteraciones.')    
